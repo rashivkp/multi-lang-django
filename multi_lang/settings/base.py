@@ -1,24 +1,34 @@
-# Django settings for multi_lang project.
+#==============================================================================
+# Calculation of directories relative to the project module location
+#==============================================================================
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+import os
+import sys
+import peecs as project_module
 
-ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-)
+PROJECT_DIR = os.path.dirname(os.path.realpath(project_module.__file__))
 
-MANAGERS = ADMINS
+PYTHON_BIN = os.path.dirname(sys.executable)
+ve_path = os.path.dirname(os.path.dirname(os.path.dirname(PROJECT_DIR)))
+# Assume that the presence of 'activate_this.py' in the python bin/
+# directory means that we're running in a virtual environment.
+if os.path.exists(os.path.join(PYTHON_BIN, 'activate_this.py')):
+    # We're running with a virtualenv python executable.
+    VAR_ROOT = os.path.join(os.path.dirname(PYTHON_BIN), 'var')
+elif ve_path and os.path.exists(os.path.join(ve_path, 'bin',
+        'activate_this.py')):
+    # We're running in [virtualenv_root]/src/[project_name].
+    VAR_ROOT = os.path.join(ve_path, 'var')
+else:
+    # Set the variable root to a path in the project which is
+    # ignored by the repository.
+    VAR_ROOT = os.path.join(PROJECT_DIR, 'var')
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
+if not os.path.exists(VAR_ROOT):
+    os.mkdir(VAR_ROOT)
+
+import os, sys
+sys.path.insert(0, os.path.join(PROJECT_DIR, 'apps'))
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.4/ref/settings/#allowed-hosts
