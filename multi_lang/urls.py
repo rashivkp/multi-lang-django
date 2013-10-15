@@ -8,6 +8,7 @@ from django.views.generic import TemplateView
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', TemplateView.as_view(template_name='website/index.html'), name='home'),
+    (r'^i18n/', include('django.conf.urls.i18n')),
     # url(r'^multi_lang/', include('multi_lang.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
