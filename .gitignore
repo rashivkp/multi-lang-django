@@ -1,0 +1,16 @@
+multi_lang/settings/local.py
+multi_lang/settings/local
+
+### vim ###
+.*.s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+
+### Django ###
+*.log
+*.pot
+*.pyc
+
