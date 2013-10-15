@@ -1,2 +1,7 @@
-<p>Hi, all</p>
+{% load i18n %}
+
+<p>{% trans "Hi, all" %}</p>
 <p>This is a sample page for demonstration of internationalization</p>
+
+{% get_current_language as LANGUAGE_CODE %}
+<p>{% trans "Current language" %}: {{ LANGUAGE_CODE }}</p>
